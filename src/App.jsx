@@ -1,67 +1,95 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
-  const [universities, setUniversities] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const [universities, setUniversities] = useState([]); //stores the list of universities
+  const [searchParam, setSearchParam] = useState('');  //takes the value of the search input
 
   useEffect(() => {
-    fetchUniversities();
-  }, []);
+    const fetchData = async () => {
+      let url = 'http://universities.hipolabs.com/search';
+       //if searchParam is not empty, add the country to the url
+      if (searchParam) {  
+        url += `?country=${searchParam}`; 
+        const response = await fetch(url);
+        const data = await response.json();
+        const names = data.map((university) => university.name);
+        setUniversities(names);
+      } else {
+        setUniversities([]);
+      }
+    };
 
-  const fetchUniversities = async () => {
-    try {
-      const res = await fetch(`http://universities.hipolabs.com/search?country=${searchQuery}`);
-      const universities = await res.json();
-      setUniversities(universities);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    fetchData();
+  }, [searchParam]);
+  //the dependency array is set to searchParam, so the effect will only run once, searchParam change
 
   const handleSearch = (e) => {
     e.preventDefault();
-    fetchUniversities();
+    const searchInput = document.querySelector('.search-bar');
+    setSearchParam(searchInput.value); //set the searchParam to the value of the search input
   };
 
-  const handleInputChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
-  useEffect(() => {
-    const filteredResults = universities.filter((university) =>
-      university.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setSearchResults(filteredResults);
-  }, [searchQuery, universities]);
+  let today = new Date();
+let date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+console.log(today);
 
   return (
     <div className='container'>
-      <form onSubmit={handleSearch}>
-        <input
-          type="text"
-          placeholder="Search University"
-          value={searchQuery}
-          onChange={handleInputChange}
-        />
-        <button type="submit">Search</button>
+      <h1 className='number-of-universities'>Welcome to Search Universities</h1>
+      <form>
+        <input type='text' placeholder='Search University' className='search-bar' />
+        <button type='submit' className='search-btn' onClick={handleSearch}>
+          Search
+        </button>
       </form>
 
-      <div className="container-box">
-        {searchResults.length > 0 ? (
-          searchResults.map((university, index) => (
-            <div className="cards" key={index}>
-              <h4>{university.name}</h4>
-              <p className='domains'>{university.domains}</p>
+      <div className='container-box'>
+        {
+          universities.length > 0 ? (
+<h1 className='number-of-universities'>{searchParam} has {universities.length} universities</h1>
+          ) : (
+              <h2 className='number-of-universities'>Search for a country</h2>
+          )
+        }
+       
+        {
+        universities.length > 0 ? (
+          universities.map((name, index) => (
+            
+            <div className='cards' key={index}>
+              <h3>{name}</h3>
             </div>
+
           ))
-        ) : (
-          <p>No results found.</p>
-        )}
+        ) : null
+        }
+
       </div>
+      
+     
+      {
+        universities.length > 0 ?  <footer>
+        <ul>
+          <li>created by Brian Kemboi</li>
+          <li className='footerList'>Date - <span>{date }</span></li>
+       </ul>
+      </footer> : null
+      }
+
+
+
+      
     </div>
   );
 }
 
 export default App;
+
+
+{/* <footer>
+<ul>
+  <li>created by Brian Kemboi</li>
+  <li className='footerList'>Date - <span>{date }</span></li>
+</ul>
+</footer> */}
