@@ -10,11 +10,13 @@ function App() {
       let url = 'http://universities.hipolabs.com/search';
        //if searchParam is not empty, add the country to the url
       if (searchParam) {  
-        url += `?country=${searchParam}`; 
-        const response = await fetch(url);
-        const data = await response.json();
-        const names = data.map((university) => university.name);
-        setUniversities(names);
+        url += `?country=${searchParam}`
+        const response = await fetch(url)
+        const data = await response.json()
+        const names = data.map((university) => {
+          return university.name
+        } )
+        setUniversities(names)
       } else {
         setUniversities([]);
       }
@@ -26,11 +28,11 @@ function App() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    const searchInput = document.querySelector('.search-bar');
-    setSearchParam(searchInput.value); //set the searchParam to the value of the search input
+    const searchInput = document.querySelector('.search-bar')
+    setSearchParam(searchInput.value) //set the searchParam to the value of the search input
   };
 
-  let today = new Date();
+  let today = new Date()
 let date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
 console.log(today);
 
@@ -81,15 +83,10 @@ console.log(today);
 
       
     </div>
-  );
+  )
 }
 
 export default App;
 
 
-{/* <footer>
-<ul>
-  <li>created by Brian Kemboi</li>
-  <li className='footerList'>Date - <span>{date }</span></li>
-</ul>
-</footer> */}
+
