@@ -14,7 +14,7 @@ function App() {
         const response = await fetch(url)
         const data = await response.json()
         const names = data.map((university) => {
-          return university.name
+          return university
         } )
         setUniversities(names)
       } else {
@@ -29,7 +29,7 @@ function App() {
   const handleSearch = (e) => {
     e.preventDefault();
     const searchInput = document.querySelector('.search-bar')
-    setSearchParam(searchInput.value) //set the searchParam to the value of the search input
+    setSearchParam(searchInput.value)
   };
 
   let today = new Date()
@@ -57,10 +57,12 @@ console.log(today);
        
         {
         universities.length > 0 ? (
-          universities.map((name, index) => (
+          universities.map((item, index) => (
             
             <div className='cards' key={index}>
-              <h3>{name}</h3>
+              <h3>{item.name}</h3> <br />
+              <p className='domain'>{item.domains}</p>
+              <p className='webPage'>{ item.web_pages}</p>
             </div>
 
           ))

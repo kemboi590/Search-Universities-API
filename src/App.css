@@ -24,7 +24,7 @@ body{
     
 }
 .cards {
-    height: 150px;
+    height: 200px;
     width: 350px;
     border: 1px solid rgba(186, 159, 159, 0.631);
     background-color: #2a1c3884;
@@ -32,6 +32,12 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+  }
+  .search-bar{
+    padding: 10px;
+    text-align: center;
+    font-size: 20px;
   }
   
   .cards h3 {
@@ -41,6 +47,15 @@ body{
     margin: 0;
     font-weight: bold;
     font-size: 20px;
+  }
+  .domain{
+    color: white;
+    letter-spacing: 2px;
+  }
+  .webPage{
+    color: white;
+    margin-top: 10px;
+    letter-spacing: 2px;
   }
   
 form{
@@ -91,4 +106,5 @@ footer ul{
     align-items: center;
     gap: 20px;
 }
+
   
