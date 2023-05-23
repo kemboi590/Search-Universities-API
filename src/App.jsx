@@ -10,7 +10,7 @@ function App() {
       let url = 'https://universitiesapi.onrender.com/v1/api/universities';
        //if searchParam is not empty, add the country to the url
       if (searchParam) {  
-        url += `=${searchParam}`
+        url += `/${searchParam}`
         const response = await fetch(url)
         const data = await response.json()
         const names = data.map((university) => {
