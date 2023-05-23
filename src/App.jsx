@@ -2,15 +2,15 @@ import { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
-  const [universities, setUniversities] = useState([]); //stores the list of universities
-  const [searchParam, setSearchParam] = useState('');  //takes the value of the search input
+  const [universities, setUniversities] = useState([]);
+  const [searchParam, setSearchParam] = useState('');  
 
   useEffect(() => {
     const fetchData = async () => {
-      let url = 'http://universities.hipolabs.com/search';
+      let url = 'https://universitiesapi.onrender.com/v1/api/universities';
        //if searchParam is not empty, add the country to the url
       if (searchParam) {  
-        url += `?country=${searchParam}`
+        url += `=${searchParam}`
         const response = await fetch(url)
         const data = await response.json()
         const names = data.map((university) => {
@@ -34,7 +34,7 @@ function App() {
 
   let today = new Date()
 let date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
-console.log(today);
+
 
   return (
     <div className='container'>
